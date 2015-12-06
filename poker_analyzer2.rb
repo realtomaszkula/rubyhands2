@@ -41,9 +41,8 @@ end
 
 cards.sort!
 
-### hand strength
-handstr = fixnum.new
-
+p cards
+p suits
 ### flushes straights and straightflushes
 
 
@@ -59,29 +58,34 @@ def flush(cards)
 end
 
 def straightflush(suits, cards)
-	return have_flush(suits) + have_straight(cards) if have_flush(suits) && have_straight(cards)
+	return flush(suits) + straight(cards) if flush(suits) && straight(cards)
 	false
 end
 
 ### 
-uniqness = cards.uniq
+def checkforuniq (cards)
+	uniqness = cards.uniq.length
+	p uniqness
+	result = 0
 
-card_counting = []
-5.times do |x|
-card_counting[x] = cards.count(cards[x])
-end
+	card_counting = []
+	5.times do |x|
+	card_counting[x] = cards.count(cards[x])
+	end
+	
+	if (uniqness == 5)
+	 	result = highcard(cards)
+	elsif (uniqness == 4)
+	 	result = onepair(cards, uniqness)
+	elsif 	(uniqness == 2)
+	 	result = quads(cards, uniqness)
+	else
+	 	result = fullhouse(cards, uniqness) 	if (card_counting.min == 2 && card_counting.max == 3)
+	 	result = trips(cards, uniqness)		if (card_counting.min == 1 && card_counting.max == 3)
+	 	result = twopair(cards, uniqness)	if (card_counting.count(2) == 4)
+	end
 
-
- if (uniqness == 5)
- 	highcard(cards, uniqness)
- elsif (uniqness == 4)
- 	onepair(cards, uniqness)
- elsif 	(uniqness == 2)
- 	quads(cards, uniqness)
- else
- 	fullhouse(cards, uniqness) if (card_counting.min == 2 && card_counting.max == 3)
- 	trips(cards, uniqness)	if (card_counting.min == 1 && card_counting.max == 3)
- 	twopair(cards, uniqness)	if (card_counting.count(2) == 4)
+	result
 end
 
 def quads (cards, uniqness)
@@ -139,3 +143,18 @@ def highcard (cards)
 	end
 	sum = sum / 1000
 end
+
+
+### check hand strength
+player_one_hand_ranks = []
+player_two_hand_ranks = []
+
+	hand_strength = 0
+
+
+	# hand_strength = straightflush(suits,cards)
+	# hand_strength = flush(suits) 
+	# hand_strength = straight(cards) 
+	# hand_strength = checkforuniq(cards) 
+
+	
