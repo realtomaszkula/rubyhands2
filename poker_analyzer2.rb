@@ -108,13 +108,34 @@ def twopair (cards, uniqness)
 		pairs << uniqness[x] if (cards.count(uniqness[x]) == 2) 
 	end
 
-	1000 + pairs.max * 10 + pairs.min
+	kicker = cards.keep_if {|x| (x != pairs.min) && (x != pairs.max) }
+
+	 1000 + pairs.max * 100 + pairs.min * 10 + kicker[0]
 end
 
 
 def onepair (cards, uniqness)
-	
+	pair = 0
+	kicker_array = []
+
+	4.times do |x|
+	pair = uniqness[x] if (cards.count(uniqness[x]) == 2) 
+	end
+
+	kicker_array = cards.delete_if{|x| x == pair}
+	kicker_array.sort!
 
 
+	(1000 * pair + 100 * kicker_array[0] + 10 * kicker_array[1] + kicker_array[2]) / 10
+end
 
+
+def highcard (cards)
+	sum = 0.0
+	val = 10000
+	cards.each do
+		|x| sum += x * val	
+		val /= 10
+	end
+	sum = sum / 1000
 end
