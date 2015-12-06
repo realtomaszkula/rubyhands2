@@ -74,13 +74,14 @@ end
 
  if (uniqness == 5)
  	highcard(cards, uniqness)
+ elsif (uniqness == 4)
+ 	onepair(cards, uniqness)
  elsif 	(uniqness == 2)
  	quads(cards, uniqness)
  else
  	fullhouse(cards, uniqness) if (card_counting.min == 2 && card_counting.max == 3)
  	trips(cards, uniqness)	if (card_counting.min == 1 && card_counting.max == 3)
  	twopair(cards, uniqness)	if (card_counting.count(2) == 4)
- 	pair(cards, uniqness)	if (card_counting.count(2) == 2)
 end
 
 def quads (cards, uniqness)
@@ -101,3 +102,19 @@ def trips (cards, uniqness)
 	end
 end
 	
+def twopair (cards, uniqness)
+	pairs = []
+	3.times do |x| 	
+		pairs << uniqness[x] if (cards.count(uniqness[x]) == 2) 
+	end
+
+	1000 + pairs.max * 10 + pairs.min
+end
+
+
+def onepair (cards, uniqness)
+	
+
+
+
+end
