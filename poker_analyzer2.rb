@@ -65,21 +65,39 @@ end
 
 ### 
 uniqness = cards.uniq
-card_counting = []
 
+card_counting = []
 5.times do |x|
 card_counting[x] = cards.count(cards[x])
 end
 
 
  if (uniqness == 5)
- 	highcard(cards)
+ 	highcard(cards, uniqness)
  elsif 	(uniqness == 2)
- 	quads(cards)
+ 	quads(cards, uniqness)
  else
- 	fullhouse(cards) if (card_counting.min == 2 && card_counting.max == 3)
- 	trips(cards)	if (card_counting.min == 1 && card_counting.max == 3)
- 	twopair(cards)	if (card_counting.count(2) == 4)
- 	pair(cards)	if (card_counting.count(2) == 2)
+ 	fullhouse(cards, uniqness) if (card_counting.min == 2 && card_counting.max == 3)
+ 	trips(cards, uniqness)	if (card_counting.min == 1 && card_counting.max == 3)
+ 	twopair(cards, uniqness)	if (card_counting.count(2) == 4)
+ 	pair(cards, uniqness)	if (card_counting.count(2) == 2)
 end
 
+def quads (cards, uniqness)
+	2.times do |x| 
+	return 7000 + uniqness[x] if (cards.count(uniqness[x]) == 4) 
+	end
+end
+
+def fullhouse (cards, uniqness)
+	3.times do |x| 
+	return 6000 + uniqness[x] if (cards.count(uniqness[x]) == 3) 
+	end
+end
+
+def trips (cards, uniqness)
+	3.times do |x| 
+	return 3000 + uniqness[x] if (cards.count(uniqness[x]) == 3) 
+	end
+end
+	
